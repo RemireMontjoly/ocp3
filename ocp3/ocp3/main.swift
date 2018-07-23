@@ -2,56 +2,67 @@
 //  main.swift
 //  ocp3
 //
-//  Created by pith on 21/07/2018.
-//  Copyright © 2018 dino. All rights reserved.
-//
-// commentaire
 import Foundation
-
-// Fonction permettant de demander à l'utilisateur d'entrer un choix (de type String)
-
+////////////////////////////////////// Fonction qui recupere ce que entre l'utilisateur
 func input() -> String {
-    let str = readLine()
-    return str!
+    if let str = readLine() {
+        return str
+    }
+    return ""
 }
+////////////////////////////////////// Les variables utiles au programme
+var choice: String?
+var nameArray = [String]()
+var name: String?
+var counterPerso = ["premier" , "deuxième", "troisieme"]
 
-//Presentation du menu pour constituer les équipes
-
-print("Equipe 1: ")
-
-func fabEquipe () {                              //Fonction pour creer une equipe
+////////////////////////////////////// Fonction pour créer les équipes
+func makeTeam () {
     
-    print("Choisissez le nom de votre équipe: ")   //Les variables necessaires pour constituer l'équipe
-    var nomEquipe = input()
-    var choice: String
-    var counter = 0
-    var counterPerso: String?
-    while counter < 3 {
-        if counter == 0 {counterPerso = "premier"         //Pour changer la phrase afin quelle corresponde à l'ordre
-        }                                                 // des personnages.
-        if counter == 1 { counterPerso = "deuxième"
-        }
-        else if counter == 2 {counterPerso = "troisième"
-        }
-        
+    name = getTeamName()
+    search(name: name!)
+    
+    for index in 0...2 {
+        var a:Int
+        a = index
         repeat {
-            print ("Choisissez la classe de votre \(counterPerso!) personnage: "
+            print ("Choisissez la classe de votre \(counterPerso[a]) personnage: "
                 + "\n1. Combattant"
                 + "\n2. Mage"
                 + "\n3. Colosse"
                 + "\n4. Nain")
             choice = input()
-        }  while choice < "1" || choice > "4"
+            
+        }  while choice! < "1" || choice! > "4"
         
-        print("Choisissez son nom: ")
-        var nomPerso = input()
-        counter += 1
+        print("Veuillez choisir le nom du \(counterPerso[a]) perso")
+        name = input()
+        search(name: name!)
     }
 }
-fabEquipe()                                       //Appel de la fonction pour creer la premiere equipe
-print("Equipe 2: ")
-fabEquipe()                                       //Appel de la fonction pour creer la deuxieme equipe
+////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
+func getTeamName() -> String {
+    print("Veuillez choisir le nom de votre équipe")
+    if let name = readLine() {
+        return name
+    } else {
+        print (" Veuillez recommencer")
+        return getTeamName()
+    }
+}
+////////////////////////////////////// Fonction qui verifie que le nom entré n'est pas déjà utilisé
+func search (name: String)  {
+    if let index = nameArray.index(of: name){
+        print("choisi autre chose")
+    }else{
+        nameArray.append(name)
+    }
+}
+////////////////////////////////////// Test de bon fonctionnement
+makeTeam()  //// equipe 1
+makeTeam()  //// equipe 2
 
+print (nameArray)
 
 
 
