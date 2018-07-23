@@ -20,7 +20,7 @@ var counterPerso = ["premier" , "deuxième", "troisieme"]
 func makeTeam () {
     
     name = getTeamName()
-    search(name: name!)
+    checkIfExist(name: name!)
     
     for index in 0...2 {
         var a:Int
@@ -37,7 +37,7 @@ func makeTeam () {
         
         print("Veuillez choisir le nom du \(counterPerso[a]) perso")
         name = input()
-        search(name: name!)
+        checkIfExist(name: name!)
     }
 }
 ////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
@@ -51,9 +51,9 @@ func getTeamName() -> String {
     }
 }
 ////////////////////////////////////// Fonction qui verifie que le nom entré n'est pas déjà utilisé
-func search (name: String)  {
+func checkIfExist (name: String)  {
     if let index = nameArray.index(of: name){
-        print("choisi autre chose")
+        print("Veuillez choisir un autre nom car celui-ci est déjà pris")
     }else{
         nameArray.append(name)
     }
