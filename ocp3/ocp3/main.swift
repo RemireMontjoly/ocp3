@@ -54,6 +54,9 @@ func getTeamName() -> String {
 func checkIfExist (name: String)  {
     if let index = nameArray.index(of: name){
         print("Veuillez choisir un autre nom car celui-ci est déjà pris")
+        if let name = readLine() {
+            checkIfExist(name: name)
+        }
     }else{
         nameArray.append(name)
     }
