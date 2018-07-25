@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C115EF3321031E9A00AE0E56 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C115EF3221031E9A00AE0E56 /* main.swift */; };
+		C1C18EA72108D4FF00A83DB7 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C18EA62108D4FF00A83DB7 /* Character.swift */; };
+		C1C18EA92108D6C000A83DB7 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C18EA82108D6C000A83DB7 /* Team.swift */; };
+		C1C18EAB2108D9C700A83DB7 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C18EAA2108D9C700A83DB7 /* GameManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		C115EF2F21031E9A00AE0E56 /* ocp3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ocp3; sourceTree = BUILT_PRODUCTS_DIR; };
 		C115EF3221031E9A00AE0E56 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C1C18EA62108D4FF00A83DB7 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		C1C18EA82108D6C000A83DB7 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		C1C18EAA2108D9C700A83DB7 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				C115EF3221031E9A00AE0E56 /* main.swift */,
+				C1C18EA62108D4FF00A83DB7 /* Character.swift */,
+				C1C18EA82108D6C000A83DB7 /* Team.swift */,
+				C1C18EAA2108D9C700A83DB7 /* GameManager.swift */,
 			);
 			path = ocp3;
 			sourceTree = "<group>";
@@ -119,7 +128,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1C18EA92108D6C000A83DB7 /* Team.swift in Sources */,
+				C1C18EAB2108D9C700A83DB7 /* GameManager.swift in Sources */,
 				C115EF3321031E9A00AE0E56 /* main.swift in Sources */,
+				C1C18EA72108D4FF00A83DB7 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
