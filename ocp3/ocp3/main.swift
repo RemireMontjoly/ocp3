@@ -5,8 +5,8 @@
 import Foundation
 
 /////////////////////////// Test de bon fonctionnement
-makeTeam()
-chooseType()
-chooseName()
+ makeTeam()
+
 print(typeArray)
 print(nameArray)
+
