@@ -9,9 +9,12 @@
 import Foundation
 
 class Team {
-    var name = ""
-    var numberOfCharacters: Int = 3
+    var name: String
     var characters = [Character]()
+    
+    init(name: String ) {
+        self.name = name
     }
+}
 
 

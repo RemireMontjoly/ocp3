@@ -5,8 +5,13 @@
 import Foundation
 
 /////////////////////////// Test de bon fonctionnement
- makeTeam()
 
-print(typeArray)
-print(nameArray)
+
+
+let gameManager = GameManager()
+
+gameManager.gameInit()
+
+print(gameManager.typeArray)
+print(gameManager.nameArray)
 

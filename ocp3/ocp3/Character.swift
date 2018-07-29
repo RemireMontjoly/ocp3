@@ -9,7 +9,12 @@
 import Foundation
 
 class Character {
-    var type = ""
-    var name = ""
+    var type: String
+    var name: String
+    
+    init(type: String, name: String) {
+        self.type = type
+        self.name = name
+    }
 }
 
