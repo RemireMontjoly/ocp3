@@ -61,25 +61,31 @@ class GameManager {
             return getCharacterName()
         }
     }
-        /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
-        func gameInit() {
-            team1 = makeTeam()
-            team2 = makeTeam()
+    /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
+    func gameInit() {
+        team1 = makeTeam()
+        team2 = makeTeam()
+    }
+    ///////////////////////////////////////////////////////////////// Fonction pour créer un personnage(type + nom)
+    
+    func makeCharacter() -> Character {
+        
+        let characterType = getCharacterType()
+        let characterName = getCharacterName()
+        let character = Character(type: characterType, name: characterName)
+        return character
+    }
+    
+    ///////////////////////////////////////////////////////// Fonction pour créer les équipes
+    func makeTeam () -> Team {
+        var characterTeam: Character?
+        let teamName = getTeamName()
+        for _ in 1...3 {
+            characterTeam = makeCharacter()
         }
-        func makeCharacter() -> Character {
-            let characterType = getCharacterType()
-            let characterName = getCharacterName()
-            let character = Character(type: characterType, name: characterName)
-            return character
-        }
-        ///////////////////////////////////////////////////////// Fonction pour créer les équipes
-        func makeTeam () -> Team {
-            let teamName = getTeamName()
-            let characterTeam = makeCharacter()
-            let team = Team(name: teamName)
-            return team
-        }
+        let team = Team(name: teamName, characters: [characterTeam!])
+        return team
+    }
 }
-
 
 

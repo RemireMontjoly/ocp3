@@ -12,8 +12,9 @@ class Team {
     var name: String
     var characters = [Character]()
     
-    init(name: String ) {
+    init(name: String, characters: [Character]) {
         self.name = name
+        self.characters = characters
     }
 }
 

@@ -11,7 +11,7 @@ import Foundation
 let gameManager = GameManager()
 
 gameManager.gameInit()
-
+//gameManager.makeCharacter()
 print(gameManager.typeArray)
 print(gameManager.nameArray)
 
