@@ -16,6 +16,14 @@ class Team {
         self.name = name
         self.characters = characters
     }
+    func teamInfo() {
+        print("L'équipe \(self.name) est composée de :")
+        for character in characters{
+            print ("- \(character.name) de type \(character.type)")
+        }
+    }
 }
+
+
 
 

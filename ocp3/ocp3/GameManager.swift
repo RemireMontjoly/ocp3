@@ -12,8 +12,7 @@ class GameManager {
     
     ////////////////////////////////////////////////////// Les variables utiles au programme
     var nameArray = [String]()
-    var typeArray = [String]()
-    var counterPerso = ["premier" , "deuxième", "troisieme"]
+    //    var typeArray = [String]()
     var team1: Team?
     var team2: Team?
     
@@ -46,6 +45,10 @@ class GameManager {
             + "\n3. Colosse"
             + "\n4. Nain")
         if let choice = readLine(){
+            if choice < "1" || choice > "4" {
+                print("Veuillez choisir entre 1 et 4 ")
+                return  getCharacterType()
+            }
             return choice
         } else {
             return getCharacterType()
@@ -61,11 +64,7 @@ class GameManager {
             return getCharacterName()
         }
     }
-    /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
-    func gameInit() {
-        team1 = makeTeam()
-        team2 = makeTeam()
-    }
+    
     ///////////////////////////////////////////////////////////////// Fonction pour créer un personnage(type + nom)
     
     func makeCharacter() -> Character {
@@ -78,14 +77,25 @@ class GameManager {
     
     ///////////////////////////////////////////////////////// Fonction pour créer les équipes
     func makeTeam () -> Team {
-        var characterTeam: Character?
         let teamName = getTeamName()
+        var characterTeam = [Character]()
         for _ in 1...3 {
-            characterTeam = makeCharacter()
+            let character = makeCharacter()
+            characterTeam.append(character)
         }
-        let team = Team(name: teamName, characters: [characterTeam!])
+        let team = Team(name: teamName, characters: characterTeam)
         return team
     }
+    
+    /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
+    func gameInit() {
+        team1 = makeTeam()
+        team1?.teamInfo()
+        // team2 = makeTeam()
+        
+    }
+    
 }
+
 
 

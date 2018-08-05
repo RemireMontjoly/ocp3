@@ -7,12 +7,16 @@
 //
 
 import Foundation
-
+enum CharacterType {
+    
+}
 class Character {
+ //   var type: CharacterType
     var type: String
     var name: String
     
-    init(type: String, name: String) {
+  //  init(type: CharacterType, name: String) {
+    init(type: String, name: String){
         self.type = type
         self.name = name
     }
