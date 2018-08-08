@@ -12,10 +12,9 @@ class GameManager {
     
     ////////////////////////////////////////////////////// Les variables utiles au programme
     var nameArray = [String]()
-    //    var typeArray = [String]()
     var team1: Team?
     var team2: Team?
-    
+    var characterType: CharacterType!
     /////////////////////////////////////////////////////// Fonction qui verifie que le nom entré n'est pas déjà utilisé
     func checkIfExist (name: String)  {
         if let index = nameArray.index(of: name){
@@ -38,7 +37,7 @@ class GameManager {
         }
     }
     /////////////////////////////////////////////////////////////// Fonction pour choisir le type des personnages
-    func getCharacterType() -> String {
+    func getCharacterType() -> CharacterType {
         print ("Choisissez la classe de votre personnage: "
             + "\n1. Combattant"
             + "\n2. Mage"
@@ -49,10 +48,15 @@ class GameManager {
                 print("Veuillez choisir entre 1 et 4 ")
                 return  getCharacterType()
             }
-            return choice
-        } else {
-            return getCharacterType()
+            switch choice {
+            case "1": characterType = .Combattant
+            case "2": characterType = .Mage
+            case "3": characterType = .Colosse
+            case "4": characterType = .Nain
+            default: break
+            }
         }
+        return characterType
     }
     //////////////////////////////////////////////////////////////// Fonction pour choisir les noms des personnages
     func getCharacterName() -> String {
@@ -91,8 +95,8 @@ class GameManager {
     func gameInit() {
         team1 = makeTeam()
         team1?.teamInfo()
-        // team2 = makeTeam()
-        
+        team2 = makeTeam()
+        team2?.teamInfo()
     }
     
 }

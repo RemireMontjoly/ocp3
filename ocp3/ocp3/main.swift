@@ -12,8 +12,8 @@ let gameManager = GameManager()
 
 gameManager.gameInit()
 
-//gameManager.makeCharacter()
-//print(gameManager.typeArray)
-//print(gameManager.nameArray)
-//print(gameManager.team1!.characters)
+
+
+print(gameManager.nameArray)
+
 
