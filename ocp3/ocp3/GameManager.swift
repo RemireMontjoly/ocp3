@@ -17,7 +17,7 @@ class GameManager {
     var characterType: CharacterType!
     /////////////////////////////////////////////////////// Fonction qui verifie que le nom entré n'est pas déjà utilisé
     func checkIfExist (name: String)  {
-        if let index = nameArray.index(of: name){
+        if nameArray.index(of: name) != nil {
             print("Veuillez choisir un autre nom car celui-ci est déjà pris")
             if let name = readLine() {
                 checkIfExist(name: name)
@@ -26,6 +26,7 @@ class GameManager {
             nameArray.append(name)
         }
     }
+    
     ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
     func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")

@@ -25,16 +25,16 @@ class Character {
         switch self.type {
         case.Combattant:
             self.life = 100
-            self.damage = 80
+            self.damage = 10
         case.Mage:
             self.life = 80
-            self.damage = 50
+            self.damage = 0
         case.Colosse:
             self.life = 120
-            self.damage = 40
+            self.damage = 5
         case.Nain:
-            self.life = 90
-            self.damage = 120
+            self.life = 70
+            self.damage = 20
             
         }
     }
