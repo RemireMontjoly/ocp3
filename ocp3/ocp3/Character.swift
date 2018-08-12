@@ -8,10 +8,10 @@
 
 import Foundation
 enum CharacterType: Int {
-    case Combattant
-    case Mage
-    case Colosse
-    case Nain 
+    case Combattant = 1
+    case Mage = 2
+    case Colosse = 3
+    case Nain = 4
     
 }
 class Character {

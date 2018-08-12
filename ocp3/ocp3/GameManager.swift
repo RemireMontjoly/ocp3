@@ -11,67 +11,62 @@ import Foundation
 class GameManager {
     
     ////////////////////////////////////////////////////// Les variables utiles au programme
-    var nameArray = [String]()
+    var teamNames = [String]()
+    var characterNames = [String]()
     var team1: Team?
     var team2: Team?
-    var characterType: CharacterType!
-    /////////////////////////////////////////////////////// Fonction qui verifie que le nom entré n'est pas déjà utilisé
-    func checkIfExist (name: String)  {
-        if nameArray.index(of: name) != nil {
-            print("Veuillez choisir un autre nom car celui-ci est déjà pris")
-            if let name = readLine() {
-                checkIfExist(name: name)
-            }
-        }else{
-            nameArray.append(name)
-        }
-    }
     
     ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
     func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
         if let name = readLine() {
-            checkIfExist(name: name)
-            return name
+            if teamNames.contains(name) {
+                print("Veuillez choisir un autre nom car celui-ci est déjà pris")
+                return getTeamName()
+            } else {
+                teamNames.append(name)
+                return name
+            }
         } else {
             return getTeamName()
         }
     }
+    
     /////////////////////////////////////////////////////////////// Fonction pour choisir le type des personnages
     func getCharacterType() -> CharacterType {
+        
         print ("Choisissez la classe de votre personnage: "
             + "\n1. Combattant"
             + "\n2. Mage"
             + "\n3. Colosse"
             + "\n4. Nain")
-        if let choice = readLine(){
-            if choice < "1" || choice > "4" {
-                print("Veuillez choisir entre 1 et 4 ")
-                return  getCharacterType()
-            }
-            switch choice {
-            case "1": characterType = .Combattant
-            case "2": characterType = .Mage
-            case "3": characterType = .Colosse
-            case "4": characterType = .Nain
-            default: break
-            }
+        if let choice = readLine(),
+            let rawValue = Int(choice),
+            let characterType = CharacterType.init(rawValue: rawValue) {
+            return characterType
+        } else {
+            print("Veuillez choisir entre 1 et 4 ")
+            return getCharacterType()
         }
-        return characterType
     }
+    
     //////////////////////////////////////////////////////////////// Fonction pour choisir les noms des personnages
     func getCharacterName() -> String {
         print("Choisissez son nom: ")
         if let name = readLine(){
-            checkIfExist(name: name)
-            return name
+            if characterNames.contains(name) {
+                print("Veuillez choisir un autre nom car celui-ci est déjà pris")
+                return getCharacterName()
+            } else {
+                characterNames.append(name)
+                return name
+            }
         } else {
             return getCharacterName()
         }
     }
     
     ///////////////////////////////////////////////////////////////// Fonction pour créer un personnage(type + nom)
-    
     func makeCharacter() -> Character {
         
         let characterType = getCharacterType()

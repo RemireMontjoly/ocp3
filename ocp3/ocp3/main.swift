@@ -14,6 +14,6 @@ gameManager.gameInit()
 
 
 
-print(gameManager.nameArray)
+
 
 
