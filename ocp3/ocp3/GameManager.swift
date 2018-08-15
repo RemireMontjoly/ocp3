@@ -98,20 +98,27 @@ class GameManager {
     //////////////////////////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
     //////////////////Fonction qui permet de choisir avec quel personnage on attaque
     func chooseAttacker (team: Team) -> Character {
+        var i: Int
+        repeat {
         print("")
         print("Equipe \(team.name) veuillez choisir un de vos personnages pour passer à l'action (de 1 à 3)")
         team.beforPlay()
         let choice = readLine()
-        let index = Int(choice!)
-        let attacker = team.characters[index!-1]
+            i = Int(choice!)!
+        } while i < 1 || i > 3
+        let attacker = team.characters[1-i]  //////// i-1 car le tableau de [character] demarre à 0.Du coup ça correspond pas au choix (1 à 3)
         return attacker
     }
     /////////////////Fonction qui permet de choisir quel personnage on va attaquer
     func chooseTarget(team: Team) -> Character {
+        var i: Int
+        repeat {
             print("Veuillez choisir le personnage à attaquer (de 1 à 3)")
             team.beforPlay()
             let choice = readLine()
-            let target = team.characters[Int(choice!)!]
+            i = Int(choice!)!
+        } while i < 1 || i > 3
+            let target = team.characters[1-i]
         return target
     }
     ///////////////Fonction qui affiche le resultat team1 vs team2
@@ -130,8 +137,39 @@ class GameManager {
         charTarget.damage(attacker: charAttacker)
         print("\(charAttacker.name) a attaqué \(charTarget.name).Il lui reste  \(charTarget.life) hp.")
     }
-        
+    
+   
+                
+    
+    
+    
+    
+    
 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+        
+       
+
+    
+    
+    
+    
+    
+    
+    
+        
+
 
 
 

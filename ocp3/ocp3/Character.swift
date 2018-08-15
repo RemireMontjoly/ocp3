@@ -46,7 +46,9 @@ class Character {
             print("Ce personnage est mort")
         }
     }
-    
+    func heal (teamMate: Character) {
+        
+    }
    
     
 
