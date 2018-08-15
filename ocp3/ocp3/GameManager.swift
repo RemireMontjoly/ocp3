@@ -94,8 +94,69 @@ class GameManager {
         team2 = makeTeam()
         team2?.teamInfo()
     }
+ 
+    //////////////////////////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
+    //////////////////Fonction qui permet de choisir avec quel personnage on attaque
+    func chooseAttacker (team: Team) -> Character {
+        print("")
+        print("Equipe \(team.name) veuillez choisir un de vos personnages pour passer à l'action (de 1 à 3)")
+        team.beforPlay()
+        let choice = readLine()
+        let index = Int(choice!)
+        let attacker = team.characters[index!-1]
+        return attacker
+    }
+    /////////////////Fonction qui permet de choisir quel personnage on va attaquer
+    func chooseTarget(team: Team) -> Character {
+            print("Veuillez choisir le personnage à attaquer (de 1 à 3)")
+            team.beforPlay()
+            let choice = readLine()
+            let target = team.characters[Int(choice!)!]
+        return target
+    }
+    ///////////////Fonction qui affiche le resultat team1 vs team2
     
+    
+    func attack() {
+        let charAttacker = chooseAttacker(team: team1!)
+        let charTarget = chooseTarget(team: team2!)
+            charTarget.damage(attacker: charAttacker)
+            print("\(charAttacker.name) a attaqué \(charTarget.name).Il lui reste  \(charTarget.life) hp.")
+        }
+    //////////////Fonction qui affiche le resultat team2 vs team1
+    func counterAttack() {
+        let charAttacker = chooseAttacker(team: team2!)
+        let charTarget = chooseTarget(team: team1!)
+        charTarget.damage(attacker: charAttacker)
+        print("\(charAttacker.name) a attaqué \(charTarget.name).Il lui reste  \(charTarget.life) hp.")
+    }
+        
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

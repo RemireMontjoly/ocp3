@@ -13,6 +13,8 @@ let gameManager = GameManager()
 gameManager.gameInit()
 
 
+gameManager.attack()
+gameManager.counterAttack()
 
 
 

@@ -38,5 +38,16 @@ class Character {
             
         }
     }
-}
+    func damage (attacker: Character) {
+    
+       self.life -= attacker.damage
+        if self.life < 0 {
+            self.life = 0
+            print("Ce personnage est mort")
+        }
+    }
+    
+   
+    
 
+}

@@ -18,12 +18,23 @@ class Team {
     }
     func teamInfo() {
         print("L'équipe \(self.name) est composée de :")
-        for character in characters{
+        for character in characters {
             print ("- \(character.name) de type \(character.type) avec une vie à : \(character.life)")
         }
     }
-}
+    
+    func beforPlay() {
+        var count = 0
+        for character in characters {
+         count += 1
+            if character.life > 0 {  print("\(count)" + "- " + "\(character.type)")
+            } else {
+                print("Tous les personnages sont mort")
+            }
+    }
 
+    }
+}
 
 
 
