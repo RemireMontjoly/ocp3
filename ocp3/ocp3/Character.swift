@@ -24,13 +24,13 @@ class Character {
         self.name = name
         switch self.type {
         case.Combattant:
-            self.life = 100
-            self.damage = 10
+            self.life = 1
+            self.damage = 50
         case.Mage:
-            self.life = 80
+            self.life = 1
             self.damage = 0
         case.Colosse:
-            self.life = 120
+            self.life = 1
             self.damage = 5
         case.Nain:
             self.life = 70
