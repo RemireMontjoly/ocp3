@@ -28,7 +28,7 @@ class Character {
             self.damage = 50
         case.Mage:
             self.life = 1
-            self.damage = 0
+            self.damage = 50
         case.Colosse:
             self.life = 1
             self.damage = 5
@@ -41,9 +41,8 @@ class Character {
     func damage (attacker: Character) {
     
        self.life -= attacker.damage
-        if self.life < 0 {
+        if self.life <= 0 {
             self.life = 0
-            print("Ce personnage est mort")
         }
     }
     func heal (teamMate: Character) {

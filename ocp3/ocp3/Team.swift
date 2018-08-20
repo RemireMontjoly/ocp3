@@ -23,30 +23,40 @@ class Team {
             print ("- \(character.name) de type \(character.type) avec une vie à : \(character.life)")
         }
     }
-    //////////////////////////////////////////Fonction qui permet de choisir avec quel personnage on attaque
+    //////////////////////////////////////////Fonction qui permet de choisir avec quel personnage on attaque (En bouclant si le choix est un personnage mort)
     func chooseAttacker() -> Character {
         print("Equipe \(self.name) veuillez choisir un de vos personnages pour passer à l'action (de 1 à 3)")
         miniInfo()
         if let choice = Int(readLine()!) {
-            switch choice {
-            case 1: return self.characters[0]
-            case 2: return self.characters[1]
-            case 3: return self.characters[2]
-            default: print("Veuillez choisir entre 1 et 3")
+            if self.characters[choice - 1].life == 0 {
+                print("Ce personnage est mort.Veuillez en choisir un autre.")
+                return chooseAttacker()
+            } else {
+                switch choice {
+                case 1: return self.characters[0]
+                case 2: return self.characters[1]
+                case 3: return self.characters[2]
+                default: print("Veuillez choisir entre 1 et 3")
+                }
             }
         }
         return chooseAttacker()
     }
-    ///////////////////////////////////////////Fonction qui permet de choisir quel personnage on va attaquer
+    ///////////////////////////////////////////Fonction qui permet de choisir quel personnage on va attaquer (En bouclant si le choix est un personnage mort)
     func chooseTarget() -> Character {
         print("Veuillez choisir quel personnage attaquer (de 1 à 3)")
         miniInfo()
         if let choice = Int(readLine()!) {
-            switch choice {
-            case 1: return self.characters[0]
-            case 2: return self.characters[1]
-            case 3: return self.characters[2]
-            default: print("Veuillez choisir entre 1 et 3")
+            if self.characters[choice - 1].life == 0 {
+                print("Ce personnage est mort.Veuillez en choisir un autre.")
+                return chooseTarget()
+            } else {
+                switch choice {
+                case 1: return self.characters[0]
+                case 2: return self.characters[1]
+                case 3: return self.characters[2]
+                default: print("Veuillez choisir entre 1 et 3")
+                }
             }
         }
         return chooseTarget()
@@ -58,9 +68,12 @@ class Team {
         if characters[0].life == 0 && characters[1].life == 0 && characters[2].life == 0 {
             return true
         } else {
-     return false
+            return false
+        }
     }
-    }
+    
+    
+    
     /////////////////////////////Fonction pour rappeler quels sont les noms des membre
     func miniInfo() {
         var count = 0
@@ -70,7 +83,7 @@ class Team {
         }
     }
     
-
-    }
+    
+}
 
 

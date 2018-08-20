@@ -110,19 +110,21 @@ class GameManager {
 ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
     
     func play() {
-        let team1Lose = team1!.alive(team: team1!)   //// True si life == 0   
-        let team2Lose = team2!.alive(team: team2!)
+        var team1Lose = team1!.alive(team: team1!)   //// True si life == 0
+        var team2Lose = team2!.alive(team: team2!)
         repeat {
             attack()
             counterAttack()
-        }
-        while team1Lose == false && team2Lose == false
+        } while team1Lose == false && team2Lose == false
         if team1Lose == true {
             print("L'équipe \(team2!.name) a gagné")
         } else {
             print("L'équipe \(team1!.name) a perdu")
         }
     }
+            
+            
+   
     
     
     
