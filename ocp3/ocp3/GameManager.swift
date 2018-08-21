@@ -94,37 +94,33 @@ class GameManager {
         team2 = makeTeam()
         team2?.teamInfo()
     }
-///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
-    func attack() {
-       let charAttacker = team1!.chooseAttacker()
-        let charTarget = team2!.chooseTarget()
+    ///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
+    func attack(charAttacker: Character, charTarget: Character) {
+        
         charTarget.damage(attacker: charAttacker)
         print("\(charAttacker.name) a attaqué \(charTarget.name).Il lui reste \(charTarget.life) hp.")
     }
-    func counterAttack() {
-        let charAttacker = team2!.chooseAttacker()
-        let charTarget = team1!.chooseTarget()
-        charTarget.damage(attacker: charAttacker)
-        print("\(charAttacker.name) a attaqué \(charTarget.name).Il lui reste \(charTarget.life) hp.")
-    }
-///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
+    
+    ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
     
     func play() {
-        var team1Lose = team1!.alive(team: team1!)   //// True si life == 0
-        var team2Lose = team2!.alive(team: team2!)
+        var attackerTeam = team1!
+        var targetTeam = team2!
         repeat {
-            attack()
-            counterAttack()
-        } while team1Lose == false && team2Lose == false
-        if team1Lose == true {
+            let attacker = attackerTeam.chooseAttacker()
+            let target = targetTeam.chooseTarget()
+            attack(charAttacker: attacker, charTarget: target)
+            swap(&attackerTeam, &targetTeam)
+        } while team1!.alive(team: team1!) == false && team2!.alive(team: team2!) == false
+        if team1!.alive(team: team1!) == true {
             print("L'équipe \(team2!.name) a gagné")
         } else {
             print("L'équipe \(team1!.name) a perdu")
         }
     }
-            
-            
-   
+    
+    
+    
     
     
     
@@ -137,7 +133,7 @@ class GameManager {
     //////////////////////////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
     //////////////////Fonction qui permet de choisir avec quel personnage on attaque
     
- 
+    
     
     
     /*    func chooseAttacker (team: Team) -> Character {
@@ -154,8 +150,10 @@ class GameManager {
      }
      return attacker
      }
-     /////////////////Fonction qui permet de choisir quel personnage on va attaquer
-     func chooseTarget(team: Team) -> Character {
+     /////////////////Fonction qui permet de choisir quel personnage on va attaquer  */
+    
+    
+    /*   func chooseTarget(team: Team) -> Character {
      var i: Int
      repeat {
      print("Veuillez choisir le personnage à attaquer (de 1 à 3)")
@@ -165,10 +163,10 @@ class GameManager {
      let target = team.characters[i - 1]
      return target
      }
-     ///////////////Fonction qui affiche le resultat team1 vs team2
-     
-     
-     func attack() {
+     ///////////////Fonction qui affiche le resultat team1 vs team2  */
+    
+    
+    /*    func attack() {
      let charAttacker = chooseAttacker(team: team1!)
      let charTarget = chooseTarget(team: team2!)
      charTarget.damage(attacker: charAttacker)

@@ -46,7 +46,7 @@ class Character {
         }
     }
     func heal (teamMate: Character) {
-        
+    //    self.life += teamMate.heal
     }
    
     
