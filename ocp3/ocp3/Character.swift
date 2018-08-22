@@ -38,7 +38,7 @@ class Character {
             
         }
     }
-    func damage (attacker: Character) {
+    func damage (from attacker: Character) {
     
        self.life -= attacker.damage
         if self.life <= 0 {
