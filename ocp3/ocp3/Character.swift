@@ -19,6 +19,7 @@ class Character {
     var name: String
     var life: Int
     var damage: Int
+    var heal: Int
     init(type: CharacterType, name: String) {
         self.type = type
         self.name = name
@@ -26,16 +27,19 @@ class Character {
         case.Combattant:
             self.life = 1
             self.damage = 50
+            self.heal = 0
         case.Mage:
             self.life = 1
             self.damage = 50
+            self.heal = 200
         case.Colosse:
             self.life = 1
-            self.damage = 5
+            self.damage = 50
+            self.heal = 0
         case.Nain:
-            self.life = 70
-            self.damage = 20
-            
+            self.life = 1
+            self.damage = 50
+            self.heal = 0
         }
     }
     func damage (from attacker: Character) {
@@ -45,8 +49,8 @@ class Character {
             self.life = 0
         }
     }
-    func heal (teamMate: Character) {
-    //    self.life += teamMate.heal
+    func health (from healer: Character) {
+        self.life += healer.heal
     }
    
     

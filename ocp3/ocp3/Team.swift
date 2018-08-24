@@ -71,10 +71,32 @@ class Team {
         print("Veuillez choisir entre 1 et 3.")
         return chooseTarget()
     }
+    ////////////////////////////////////////
     
+    func chooseWhoToHeal() -> Character {
+        print("Quel personnage de votre équipe voulez-vous soigner? (de 1 à 3)")
+        if let choice = Int(readLine()!) {
+            if choice != 1 && choice != 2 && choice != 3  {
+                print("Veuillez choisir entre 1 et 3.")
+                return chooseWhoToHeal()
+            }
+            if self.characters[choice - 1].life == 0 {
+                print("Ce personnage est mort.Veuillez en choisir un autre.")
+                return chooseWhoToHeal()
+            } else {
+                switch choice {
+                case 1: return self.characters[0]
+                case 2: return self.characters[1]
+                case 3: return self.characters[2]
+                default: print("Veuillez choisir entre 1 et 3")
+                }
+            }
+        }
+        print("Veuillez choisir entre 1 et 3.")
+        return chooseWhoToHeal()
+    }
     
     ///////////////////////////////////Fonction qui permet de savoir quelle equipe n'a plus de personnage en vie
-    
     func alive(team: Team) -> Bool {
         if characters[0].life == 0 && characters[1].life == 0 && characters[2].life == 0 {
             return true
@@ -83,20 +105,22 @@ class Team {
         }
     }
     
-    
-    
-    /////////////////////////////Fonction pour rappeler quels sont les noms des membre
-    func miniInfo() {
-        var count = 0
-        for character in characters {
-            count += 1
+    /////////////////////////////Fonction pour rappeler quels sont les noms des membres
+    private func miniInfo() {
+        for(index, character) in characters.enumerated() {
             if character.life == 0 {
-                print("-\(count) \(character.name) a 0 HP restant.Il est 💀")
+                print("-\(index + 1) \(character.name) a 0 HP restant.Il est 💀")
             } else {
-                print("-\(count) \(character.name) avec \(character.life) HP restant.")
+                print("-\(index + 1) \(character.name) avec \(character.life) HP restant.")
             }
         }
     }
+    
+    
+    
+    
+    
+    
 }
 
 
