@@ -96,13 +96,11 @@ class Team {
         return chooseWhoToHeal()
     }
     
-    ///////////////////////////////////Fonction qui permet de savoir quelle equipe n'a plus de personnage en vie
-    func alive(team: Team) -> Bool {
-        if characters[0].life == 0 && characters[1].life == 0 && characters[2].life == 0 {
-            return true
-        } else {
-            return false
-        }
+    ///////////////////////////////////Fonction qui permet de savoir quelle equipe n'a plus de personnage en vie    
+    func alive() -> Bool {
+        return characters.contains(where: { character in
+            return character.life > 0
+        })
     }
     
     /////////////////////////////Fonction pour rappeler quels sont les noms des membres

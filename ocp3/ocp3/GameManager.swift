@@ -113,7 +113,7 @@ class GameManager {
             var player2 = team2!
             let attacker1 = player1.chooseAttacker()
             if attacker1.type == .Mage {
-                let hurtMate = player1.chooseWhoToHeal()        /////Fonction qui permet de choisir quel équipier le mage veut soigner(y compris lui-même)
+                let hurtMate = player1.chooseWhoToHeal()   /////Fonction qui permet de choisir quel équipier le  mage veut soigner(y compris lui-même)
                 heal(healer: attacker1, teamMate: hurtMate)     
             } else {
                 let targetTeam2 = player2.chooseTarget()
@@ -128,15 +128,16 @@ class GameManager {
             }
             swap(&player1, &player2)
             
-        } while team1!.alive(team: team1!) == false && team2!.alive(team: team2!) == false
-        if team1!.alive(team: team1!) == true || team2!.alive(team: team2!) == true {
-            print("L'équipe \(team2!.name) a gagné")
-        } else {
-            print("L'équipe \(team1!.name) a perdu")
-        }
+        } while team1!.alive() == true && team2!.alive() == true
     }
     
-    
+    func announceWinner() {
+        if team1!.alive() == false {
+            print("L'équipe \(team2!.name) a gagné! ")
+        } else {
+            print("L'équipe \(team1!.name) a gagné! ")
+        }
+    }
     
 }
 

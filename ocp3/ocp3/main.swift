@@ -14,7 +14,6 @@ gameManager.gameInit()
 
 gameManager.play()
 
-
-
+gameManager.announceWinner()
 
 
