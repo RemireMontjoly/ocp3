@@ -94,8 +94,54 @@ class GameManager {
         team2 = makeTeam()
         team2?.teamInfo()
     }
+    ///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
+    func attack(attacker: Character, target: Character) {
+        target.damage(from: attacker)
+        print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
+    }
+    
+    //////////////////////////////////Fonction pour soigner un membre de son équipe
+    func heal (healer: Character, teamMate: Character) {
+        teamMate.health(from: healer)
+        print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
+    }
+    
+    ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
+    func play() {
+        repeat {
+            var player1 = team1!
+            var player2 = team2!
+            let attacker1 = player1.chooseAttacker()
+            if attacker1.type == .Mage {
+                let hurtMate = player1.chooseWhoToHeal()   /////Fonction qui permet de choisir quel équipier le  mage veut soigner(y compris lui-même)
+                heal(healer: attacker1, teamMate: hurtMate)     
+            } else {
+                let targetTeam2 = player2.chooseTarget()
+                attack(attacker: attacker1, target: targetTeam2)
+            }
+            let attacker2 = player2.chooseAttacker()
+            if attacker2.type == .Mage {
+                let hurtMate = player2.chooseWhoToHeal()
+                heal(healer: attacker2, teamMate: hurtMate)
+            } else { let targetTeam1 = player1.chooseTarget()
+                attack(attacker: attacker2, target: targetTeam1)
+            }
+            swap(&player1, &player2)
+            
+        } while team1!.alive() == true && team2!.alive() == true
+    }
+    
+    func announceWinner() {
+        if team1!.alive() == false {
+            print("L'équipe \(team2!.name) a gagné! ")
+        } else {
+            print("L'équipe \(team1!.name) a gagné! ")
+        }
+    }
     
 }
+
+
 
 
 

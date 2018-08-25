@@ -19,24 +19,40 @@ class Character {
     var name: String
     var life: Int
     var damage: Int
+    var heal: Int
     init(type: CharacterType, name: String) {
         self.type = type
         self.name = name
         switch self.type {
         case.Combattant:
-            self.life = 100
-            self.damage = 10
+            self.life = 1
+            self.damage = 50
+            self.heal = 0
         case.Mage:
-            self.life = 80
-            self.damage = 0
+            self.life = 1
+            self.damage = 50
+            self.heal = 200
         case.Colosse:
-            self.life = 120
-            self.damage = 5
+            self.life = 1
+            self.damage = 50
+            self.heal = 0
         case.Nain:
-            self.life = 70
-            self.damage = 20
-            
+            self.life = 1
+            self.damage = 50
+            self.heal = 0
         }
     }
-}
+    func damage (from attacker: Character) {
+    
+       self.life -= attacker.damage
+        if self.life <= 0 {
+            self.life = 0
+        }
+    }
+    func health (from healer: Character) {
+        self.life += healer.heal
+    }
+   
+    
 
+}

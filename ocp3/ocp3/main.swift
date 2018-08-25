@@ -12,8 +12,8 @@ let gameManager = GameManager()
 
 gameManager.gameInit()
 
+gameManager.play()
 
-
-
+gameManager.announceWinner()
 
 
