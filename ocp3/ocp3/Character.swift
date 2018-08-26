@@ -20,26 +20,31 @@ class Character {
     var life: Int
     var damage: Int
     var heal: Int
+    var weapon: Weapon
     init(type: CharacterType, name: String) {
         self.type = type
         self.name = name
         switch self.type {
         case.Combattant:
-            self.life = 1
-            self.damage = 50
+            self.life = 100
+            self.damage = 1
             self.heal = 0
+           self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Mage:
-            self.life = 1
-            self.damage = 50
-            self.heal = 200
+            self.life = 100
+            self.damage = 0
+            self.heal = 1
+           self.weapon = Weapon(name: "MegaSparadra", damage: 50)
         case.Colosse:
-            self.life = 1
-            self.damage = 50
+            self.life = 100
+            self.damage = 1
             self.heal = 0
+         self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Nain:
-            self.life = 1
-            self.damage = 50
+            self.life = 100
+            self.damage = 1
             self.heal = 0
+           self.weapon = Weapon(name: "Machine Gun", damage: 50)
         }
     }
     func damage (from attacker: Character) {

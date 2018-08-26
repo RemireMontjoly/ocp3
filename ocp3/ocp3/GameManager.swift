@@ -105,6 +105,21 @@ class GameManager {
         teamMate.health(from: healer)
         print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
     }
+    //////////////////////////////////////Fonction pour l'apparition aléatoire du coffre
+    
+    func chestAppear(char: Character) {
+        let hazard = Int(arc4random_uniform(2))
+        if hazard == 0 {
+            print("Rien")
+        } else {
+            if char.type == .Mage {
+                char.heal = char.weapon.damage
+            } else {
+                char.damage = char.weapon.damage
+            }
+            print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
+        }
+    }
     
     ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
     func play() {
@@ -112,22 +127,24 @@ class GameManager {
             var player1 = team1!
             var player2 = team2!
             let attacker1 = player1.chooseAttacker()
+            chestAppear(char: attacker1)                     //Fait apparaitre le coffre ou pas
             if attacker1.type == .Mage {
-                let hurtMate = player1.chooseWhoToHeal()   /////Fonction qui permet de choisir quel équipier le  mage veut soigner(y compris lui-même)
-                heal(healer: attacker1, teamMate: hurtMate)     
+                let hurtMate = player1.chooseWhoToHeal()    //Fonction qui permet de choisir quel équipier le  mage
+                heal(healer: attacker1, teamMate: hurtMate) // va soigner (y compris lui-même)
             } else {
                 let targetTeam2 = player2.chooseTarget()
                 attack(attacker: attacker1, target: targetTeam2)
             }
             let attacker2 = player2.chooseAttacker()
+            chestAppear(char: attacker2)                     //Fait apparaitre le coffre ou pas
             if attacker2.type == .Mage {
                 let hurtMate = player2.chooseWhoToHeal()
                 heal(healer: attacker2, teamMate: hurtMate)
-            } else { let targetTeam1 = player1.chooseTarget()
+            } else {
+                let targetTeam1 = player1.chooseTarget()
                 attack(attacker: attacker2, target: targetTeam1)
             }
             swap(&player1, &player2)
-            
         } while team1!.alive() == true && team2!.alive() == true
     }
     
@@ -138,7 +155,6 @@ class GameManager {
             print("L'équipe \(team1!.name) a gagné! ")
         }
     }
-    
 }
 
 
