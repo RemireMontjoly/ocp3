@@ -15,7 +15,7 @@ class GameManager {
     var characterNames = [String]()
     var team1: Team?
     var team2: Team?
-    
+    var count = 0
     ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
     func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
@@ -110,10 +110,10 @@ class GameManager {
     func chestAppear(char: Character) {
         let hazard = Int(arc4random_uniform(2))
         if hazard == 0 {
-            print("Rien")
+            print("")
         } else {
             if char.type == .Mage {
-                char.heal = char.weapon.damage
+                char.heal = char.weapon.damage            ///Si c'est le Mage , on transforme les points de dommage en points de vie.
             } else {
                 char.damage = char.weapon.damage
             }
@@ -144,15 +144,19 @@ class GameManager {
                 let targetTeam1 = player1.chooseTarget()
                 attack(attacker: attacker2, target: targetTeam1)
             }
+            count += 1
             swap(&player1, &player2)
         } while team1!.alive() == true && team2!.alive() == true
     }
     
     func announceWinner() {
         if team1!.alive() == false {
-            print("L'équipe \(team2!.name) a gagné! ")
+            print("L'équipe \(team2!.name) a gagné!")
+            print ("La partie a durée \(count) rounds.")
+            
         } else {
-            print("L'équipe \(team1!.name) a gagné! ")
+            print("L'équipe \(team1!.name) a gagné!")
+            print("La partie a durée \(count) rounds.")
         }
     }
 }

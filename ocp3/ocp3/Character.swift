@@ -26,22 +26,22 @@ class Character {
         self.name = name
         switch self.type {
         case.Combattant:
-            self.life = 100
+            self.life = 1
             self.damage = 1
             self.heal = 0
            self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Mage:
-            self.life = 100
+            self.life = 1
             self.damage = 0
             self.heal = 1
            self.weapon = Weapon(name: "MegaSparadra", damage: 50)
         case.Colosse:
-            self.life = 100
+            self.life = 1
             self.damage = 1
             self.heal = 0
          self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Nain:
-            self.life = 100
+            self.life = 1
             self.damage = 1
             self.heal = 0
            self.weapon = Weapon(name: "Machine Gun", damage: 50)
