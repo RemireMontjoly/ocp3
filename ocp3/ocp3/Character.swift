@@ -27,28 +27,27 @@ class Character {
         switch self.type {
         case.Combattant:
             self.life = 1
-            self.damage = 1
+            self.damage = 20
             self.heal = 0
            self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Mage:
             self.life = 1
             self.damage = 0
             self.heal = 1
-           self.weapon = Weapon(name: "MegaSparadra", damage: 50)
+           self.weapon = Weapon(name: "MegaSparadra", damage: 1)
         case.Colosse:
             self.life = 1
-            self.damage = 1
+            self.damage = 20
             self.heal = 0
          self.weapon = Weapon(name: "Machine Gun", damage: 50)
         case.Nain:
             self.life = 1
-            self.damage = 1
+            self.damage = 20
             self.heal = 0
            self.weapon = Weapon(name: "Machine Gun", damage: 50)
         }
     }
     func damage (from attacker: Character) {
-    
        self.life -= attacker.damage
         if self.life <= 0 {
             self.life = 0
