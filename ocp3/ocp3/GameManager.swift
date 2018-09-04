@@ -16,10 +16,8 @@ class GameManager {
     var team1: Team?
     var team2: Team?
     var countRound = 0
-    var countDamageTeam1 = 0
-    var countDamageTeam2 = 0
-    var countHealthTeam1 = 0
-    var countHealthTeam2 = 0
+    var countDamageTeam = 0
+    var countHealthTeam = 0
     ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
     func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
@@ -99,6 +97,8 @@ class GameManager {
         team2?.teamInfo()
     }
     ///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
+    
+    
     func attack(attacker: Character, target: Character) -> Int {
         target.damage(from: attacker)
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
@@ -119,7 +119,7 @@ class GameManager {
             print("")
         } else {
             if char.type == .Mage {
-                char.heal = char.weapon.damage            ///Si c'est le Mage , on transforme les points de dommage en points de vie.
+                char.heal = char.weapon.damage //Si c le Mage,on transforme les points de dommage en points de vie.
             } else {
                 char.damage = char.weapon.damage
             }
@@ -129,46 +129,39 @@ class GameManager {
     
     ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
     func play() {
+        var player1 = team1!
+        var player2 = team2!
         repeat {
-            var player1 = team1!
-            var player2 = team2!
             let attacker1 = player1.chooseAttacker()
             chestAppear(char: attacker1)                     //Fait apparaitre le coffre ou pas
             if attacker1.type == .Mage {
                 let hurtMate = player1.chooseWhoToHeal()   //Fonction qui permet de choisir quel équipier le mage
-                countHealthTeam1 += heal(healer: attacker1, teamMate: hurtMate)//  va soigner (y compris lui-même)
+                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)//  va soigner (y compris lui-même)
+                player1.countHealth = countHealthTeam
             } else {                                                           // et incremente la func gameStat
                 let targetTeam2 = player2.chooseTarget()
-                countDamageTeam1 += attack(attacker: attacker1, target: targetTeam2) //Pour la func gameStat
+                countDamageTeam += attack(attacker: attacker1, target: targetTeam2) //Pour la func gameStat
+                player1.countDamage = countDamageTeam
             }
-            let attacker2 = player2.chooseAttacker()
-            chestAppear(char: attacker2)                     //Fait apparaitre le coffre ou pas
-            if attacker2.type == .Mage {
-                let hurtMate = player2.chooseWhoToHeal()
-                countHealthTeam2 += heal(healer: attacker2, teamMate: hurtMate)     //Pour la func gameStat
-            } else {
-                let targetTeam1 = player1.chooseTarget()
-                countDamageTeam2 += attack(attacker: attacker2, target: targetTeam1)
-            }
-            countRound += 1                       //Pour la fonction gameStat;affichera le nbr de round de la partie
             swap(&player1, &player2)
+            countRound += 1
         } while team1!.alive() == true && team2!.alive() == true
     }
     
     /////////////////////////////////////////////Fonction pour annoncer l'équipe gagnante
     func announceWinner() {
         if team1!.alive() == false {
-            print("L'équipe \(team1!.name) a gagné!")
-        } else {
             print("L'équipe \(team2!.name) a gagné!")
+        } else {
+            print("L'équipe \(team1!.name) a gagné!")
         }
     }
     
     ///////////////////////////////////////////////Fonction pour afficher les stats de la partie
     func gameStat() {
         print("La partie a durée \(countRound) rounds.")
-        print("L'équipe \(team1!.name) a généré \(countDamageTeam1) HP de dommage et \(countHealthTeam1) HP de soin.")
-        print("L'équipe \(team2!.name) a généré \(countDamageTeam2) HP de dommage et \(countHealthTeam2) HP de soin.")
+        print("L'équipe \(team1!.name) a généré \(team1!.countDamage) HP de dommage et \(team1!.countHealth) HP de soin.")
+        print("L'équipe \(team2!.name) a généré \(team2!.countDamage) HP de dommage et \(team2!.countHealth) HP de soin.")
     }
     
     

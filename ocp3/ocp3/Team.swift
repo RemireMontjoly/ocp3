@@ -11,7 +11,8 @@ import Foundation
 class Team {
     var name: String
     var characters = [Character]()
-    
+    var countDamage = 0
+    var countHealth = 0
     init(name: String, characters: [Character]) {
         self.name = name
         self.characters = characters
@@ -32,7 +33,7 @@ class Team {
                 print("Veuillez choisir entre 1 et 3.")
                 return chooseAttacker()
             }
-            if self.characters[choice - 1].life == 0 {                             //////////////// choice -1  car le tableau de character demarre à 0
+            if self.characters[choice - 1].life == 0 { ///////// choice -1  car le tableau de character demarre à 0
                 print("Ce personnage est mort.Veuillez en choisir un autre.")
                 return chooseAttacker()
             } else {
@@ -96,7 +97,8 @@ class Team {
         return chooseWhoToHeal()
     }
     
-    ///////////////////////////////////Fonction qui permet de savoir quelle equipe n'a plus de personnage en vie    
+    ///////////////////////////////////Fonction qui permet de savoir quelle equipe n'a plus de personnage en vie
+    
     func alive() -> Bool {
         return characters.contains(where: { character in
             return character.life > 0
