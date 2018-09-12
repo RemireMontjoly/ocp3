@@ -129,8 +129,9 @@ class GameManager {
     
     ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
     func play() {
-        var player1 = team1!
-        var player2 = team2!
+        guard var player1 = team1, var player2 = team2 else {
+            return
+        }
         repeat {
             let attacker1 = player1.chooseAttacker()
             chestAppear(char: attacker1)                     //Fait apparaitre le coffre ou pas
@@ -145,23 +146,29 @@ class GameManager {
             }
             swap(&player1, &player2)
             countRound += 1
-        } while team1!.alive() == true && team2!.alive() == true
+        } while player1.alive() == true && player2.alive() == true
     }
     
     /////////////////////////////////////////////Fonction pour annoncer l'équipe gagnante
     func announceWinner() {
-        if team1!.alive() == false {
-            print("L'équipe \(team2!.name) a gagné!")
+        guard let player1 = team1, let player2 = team2 else {
+            return
+        }
+        if player1.alive() == false {
+            print("L'équipe \(player2.name) a gagné!")
         } else {
-            print("L'équipe \(team1!.name) a gagné!")
+            print("L'équipe \(player1.name) a gagné!")
         }
     }
     
     ///////////////////////////////////////////////Fonction pour afficher les stats de la partie
     func gameStat() {
+        guard let player1 = team1, let player2 = team2 else {
+            return
+        }
         print("La partie a durée \(countRound) rounds.")
-        print("L'équipe \(team1!.name) a généré \(team1!.countDamage) HP de dommage et \(team1!.countHealth) HP de soin.")
-        print("L'équipe \(team2!.name) a généré \(team2!.countDamage) HP de dommage et \(team2!.countHealth) HP de soin.")
+        print("L'équipe \(player1.name) a généré \(player1.countDamage) HP de dommage et \(player1.countHealth) HP de soin.")
+        print("L'équipe \(player2.name) a généré \(player2.countDamage) HP de dommage et \(player2.countHealth) HP de soin.")
     }
     
     
