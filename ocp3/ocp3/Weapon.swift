@@ -10,7 +10,8 @@ import Foundation
 
 
 
-/// 
+
+/// This is the class for the weapon in random chest.
 class Weapon {
     var name: String
     var damage: Int

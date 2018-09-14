@@ -8,17 +8,21 @@
 import Foundation
 
 
+/// Class will manage the game with dedicated functions
 class GameManager {
     
-    ////////////////////////////////////////////////////// Les variables utiles au programme
-    var teamNames = [String]()
-    var characterNames = [String]()
+    /////Globals variables of the class
+    var teamNames = [String]()            //Array which will allows to check if the choosen team name is unique
+    var characterNames = [String]()       //Array which will allows to check if the choosen character name is unique
     var team1: Team?
     var team2: Team?
-    var countRound = 0
-    var countDamageTeam = 0
-    var countHealthTeam = 0
-    ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
+    var countRound = 0                    //For the stats at the end of the game
+    var countDamageTeam = 0               //For the stats at the end of the game
+    var countHealthTeam = 0               //For the stats at the end of the game
+    
+    /// Function used for asking and getting the name of the team.
+    ///
+    /// - Returns: return name choosen by players
     func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
         if let name = readLine() {
@@ -34,7 +38,10 @@ class GameManager {
         }
     }
     
-    /////////////////////////////////////////////////////////////// Fonction pour choisir le type des personnages
+    
+    /// Function used for asking and getting the character's type of each team's members
+    ///
+    /// - Returns: the character's type choosen by players
     func getCharacterType() -> CharacterType {
         
         print ("Choisissez la classe de votre personnage: "
@@ -52,7 +59,10 @@ class GameManager {
         }
     }
     
-    //////////////////////////////////////////////////////////////// Fonction pour choisir les noms des personnages
+    
+    /// Function used to choose the character's name of each team's members
+    ///
+    /// - Returns: Character's name choosen by players
     func getCharacterName() -> String {
         print("Choisissez son nom: ")
         if let name = readLine(){
@@ -68,7 +78,10 @@ class GameManager {
         }
     }
     
-    ///////////////////////////////////////////////////////////////// Fonction pour créer un personnage(type + nom)
+    
+    /// Function used to create a complete character (Type + Name)
+    ///
+    /// - Returns: An instance of Class Character for each characters built with previous functions.
     func makeCharacter() -> Character {
         
         let characterType = getCharacterType()
@@ -77,7 +90,10 @@ class GameManager {
         return character
     }
     
-    ///////////////////////////////////////////////////////// Fonction pour créer les équipes
+    
+    /// Function used to create a complete team (3 characters)
+    ///
+    /// - Returns: An instance of Class Team
     func makeTeam () -> Team {
         let teamName = getTeamName()
         var characterTeam = [Character]()
@@ -89,30 +105,46 @@ class GameManager {
         return team
     }
     
-    /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
+    
+    /// Function which will create team1 and team2 and display teams' informations.
     func gameInit() {
         team1 = makeTeam()
         team1?.teamInfo()
         team2 = makeTeam()
         team2?.teamInfo()
     }
-    ///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
+    ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
     
     
+    /// Function called to attack a choosen character of the opposite team.Used in func play()
+    ///
+    /// - Parameters:
+    ///   - attacker: Player will choose one of the three characters of his team.This func is in Class Team
+    ///   - target: Player will choose one of the three characters of the opposite team to attack.This func is in Class Team
+    /// - Returns: Damage points of the attacker.
     func attack(attacker: Character, target: Character) -> Int {
         target.damage(from: attacker)
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
         return attacker.damage
     }
     
-    //////////////////////////////////Fonction pour soigner un membre de son équipe
+    
+    /// Function for the Mage.In order to heal teammate.
+    ///
+    /// - Parameters:
+    ///   - healer: Will be the Mage
+    ///   - teamMate: Character of the team choosen by player in order to be healed.
+    /// - Returns: Health points of the Mage
     func heal (healer: Character, teamMate: Character) -> Int {
         teamMate.health(from: healer)
         print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
         return healer.heal
     }
-    //////////////////////////////////////Fonction pour l'apparition aléatoire du coffre
     
+    
+    /// Function for the random chest
+    ///
+    /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
     func chestAppear(char: Character) {
         let hazard = Int(arc4random_uniform(2))
         if hazard == 0 {
@@ -127,7 +159,9 @@ class GameManager {
         }
     }
     
-    ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
+    
+    /// This function will loop till there's a winner.
+    
     func play() {
         guard var player1 = team1, var player2 = team2 else {
             return
@@ -149,7 +183,8 @@ class GameManager {
         } while player1.alive() == true && player2.alive() == true
     }
     
-    /////////////////////////////////////////////Fonction pour annoncer l'équipe gagnante
+    
+    /// Will announce which team has won.
     func announceWinner() {
         guard let player1 = team1, let player2 = team2 else {
             return
@@ -161,7 +196,8 @@ class GameManager {
         }
     }
     
-    ///////////////////////////////////////////////Fonction pour afficher les stats de la partie
+    
+    /// For the bonus : Stats of the game.How much rounds , damage and health points.
     func gameStat() {
         guard let player1 = team1, let player2 = team2 else {
             return
