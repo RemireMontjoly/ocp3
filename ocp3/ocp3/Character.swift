@@ -26,8 +26,6 @@ class Character {
     var type: CharacterType
     var name: String
     var life: Int
-    var damage: Int
-    var heal: Int
     var weapon: Weapon
     init(type: CharacterType, name: String) {
         self.type = type
@@ -35,24 +33,16 @@ class Character {
         switch self.type {
         case.Combattant:
             self.life = 1
-            self.damage = 20
-            self.heal = 0
-           self.weapon = Weapon(name: "Storm", damage: 50)
+            self.weapon = Weapon(name: "Sword", damage: 50, heal: 0)
         case.Mage:
             self.life = 1
-            self.damage = 0
-            self.heal = 1
-           self.weapon = Weapon(name: "Magic Wand", damage: 1)
+            self.weapon = Weapon(name: "Magic Wand", damage: 0, heal: 2)
         case.Colosse:
             self.life = 1
-            self.damage = 20
-            self.heal = 0
-         self.weapon = Weapon(name: "Storm", damage: 50)
+            self.weapon = Weapon(name: "Hammer", damage: 50, heal: 0)
         case.Nain:
             self.life = 1
-            self.damage = 20
-            self.heal = 0
-           self.weapon = Weapon(name: "Storm", damage: 50)
+            self.weapon = Weapon(name: "Axe", damage: 50, heal: 0)
         }
     }
     
@@ -60,7 +50,7 @@ class Character {
     /// attacked.
     /// - Parameter attacker: The character who attack
     func damage (from attacker: Character) {
-       self.life -= attacker.damage
+        self.life -= attacker.weapon.damage
         if self.life <= 0 {
             self.life = 0
         }
@@ -70,9 +60,20 @@ class Character {
     ///
     /// - Parameter healer: The Mage character.
     func health (from healer: Character) {
-        self.life += healer.heal
+        self.life += healer.weapon.heal
     }
-   
     
-
+    func equipeNewWeapon() {
+        switch self.type {
+        case.Combattant:
+            self.weapon = Weapon(name: "Sword upgraded", damage: 50, heal: 0)
+        case.Mage:
+            self.weapon = Weapon(name: "Magic Wand upgraded", damage: 0, heal: 2)
+        case.Colosse:
+            self.weapon = Weapon(name: "Hammer upgraded", damage: 50, heal: 0)
+        case.Nain:
+            self.weapon = Weapon(name: "Axe upgraded", damage: 50, heal: 0)
+        }
+    }
+    
 }

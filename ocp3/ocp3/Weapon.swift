@@ -11,15 +11,14 @@ import Foundation
 
 
 
-/// This is the class for the weapon in random chest.
+/// This is the class for character's weapon
 class Weapon {
     var name: String
     var damage: Int
-  
-    init(name: String, damage: Int) {
+    var heal: Int
+    init(name: String, damage: Int, heal: Int) {
         self.name = name
         self.damage = damage
-       
-      
+        self.heal = heal
     }
 }

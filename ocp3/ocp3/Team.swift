@@ -18,7 +18,7 @@ class Team {
         self.name = name
         self.characters = characters
     }
- 
+    
     /// This function will display informations on each team after their built.Characters' type, name, HP.
     func teamInfo() {
         print("L'équipe \(self.name) est composée de :")
@@ -26,7 +26,6 @@ class Team {
             print ("- \(character.name) de type \(character.type) avec une vie à : \(character.life)")
         }
     }
-   
     
     /// This function will allow players to choose a character of his team in order to attack the opposite team.
     /// Will loop if the choosen character is dead.
@@ -43,18 +42,13 @@ class Team {
                 print("Ce personnage est mort.Veuillez en choisir un autre.")
                 return chooseAttacker()
             } else {
-                switch choice {
-                case 1: return self.characters[0]
-                case 2: return self.characters[1]
-                case 3: return self.characters[2]
-                default: print("Veuillez choisir entre 1 et 3")
-                }
+                return characters[choice - 1]
             }
         }
         print("Veuillez choisir entre 1 et 3.")
         return chooseAttacker()
     }
-  
+    
     /// This function will allow players to choose a character of the opposite team to attack.
     /// Will loop if the choosen character is dead.
     /// - Returns: The character of the opposite team choosen by player.
@@ -70,18 +64,12 @@ class Team {
                 print("Ce personnage est mort.Veuillez en choisir un autre.")
                 return chooseTarget()
             } else {
-                switch choice {
-                case 1: return self.characters[0]
-                case 2: return self.characters[1]
-                case 3: return self.characters[2]
-                default: print("Veuillez choisir entre 1 et 3")
-                }
+                return characters[choice - 1]
             }
         }
         print("Veuillez choisir entre 1 et 3.")
         return chooseTarget()
     }
-   
     
     /// For the Mage.Will allow to choose a teammate to heal.
     ///
@@ -97,19 +85,12 @@ class Team {
                 print("Ce personnage est mort.Veuillez en choisir un autre.")
                 return chooseWhoToHeal()
             } else {
-                switch choice {
-                case 1: return self.characters[0]
-                case 2: return self.characters[1]
-                case 3: return self.characters[2]
-                default: print("Veuillez choisir entre 1 et 3")
-                }
+                return characters[choice - 1]
             }
         }
         print("Veuillez choisir entre 1 et 3.")
         return chooseWhoToHeal()
     }
-    
-  
     
     /// Will be used to know the winner.
     ///
@@ -120,7 +101,6 @@ class Team {
         })
     }
     
-  
     /// Will display informations on each team before each round.
     private func miniInfo() {
         for(index, character) in characters.enumerated() {
@@ -131,9 +111,6 @@ class Team {
             }
         }
     }
-    
-    
-    
     
     
     

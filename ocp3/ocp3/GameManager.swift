@@ -37,8 +37,7 @@ class GameManager {
             return getTeamName()
         }
     }
-    
-    
+        
     /// Function used for asking and getting the character's type of each team's members
     ///
     /// - Returns: the character's type choosen by players
@@ -59,7 +58,6 @@ class GameManager {
         }
     }
     
-    
     /// Function used to choose the character's name of each team's members
     ///
     /// - Returns: Character's name choosen by players
@@ -78,7 +76,6 @@ class GameManager {
         }
     }
     
-    
     /// Function used to create a complete character (Type + Name)
     ///
     /// - Returns: An instance of Class Character for each characters built with previous functions.
@@ -89,7 +86,6 @@ class GameManager {
         let character = Character(type: characterType, name: characterName)
         return character
     }
-    
     
     /// Function used to create a complete team (3 characters)
     ///
@@ -104,7 +100,6 @@ class GameManager {
         let team = Team(name: teamName, characters: characterTeam)
         return team
     }
-    
     
     /// Function which will create team1 and team2 and display teams' informations.
     func gameInit() {
@@ -125,9 +120,8 @@ class GameManager {
     func attack(attacker: Character, target: Character) -> Int {
         target.damage(from: attacker)
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
-        return attacker.damage
+        return attacker.weapon.damage
     }
-    
     
     /// Function for the Mage.In order to heal teammate.
     ///
@@ -138,9 +132,8 @@ class GameManager {
     func heal (healer: Character, teamMate: Character) -> Int {
         teamMate.health(from: healer)
         print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
-        return healer.heal
+        return healer.weapon.heal
     }
-    
     
     /// Function for the random chest
     ///
@@ -150,22 +143,18 @@ class GameManager {
         if hazard == 0 {
             print("")
         } else {
-            if char.type == .Mage {
-                char.heal = char.weapon.damage //Si c le Mage,on transforme les points de dommage en points de vie.
-            } else {
-                char.damage = char.weapon.damage
-            }
+            char.equipeNewWeapon()
             print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
         }
     }
     
-    
     /// This function will loop till there's a winner.
     
     func play() {
-        guard var player1 = team1, var player2 = team2 else {
-            return
-        }
+      guard var player1 = team1,
+            var player2 = team2
+            else { return }
+        
         repeat {
             let attacker1 = player1.chooseAttacker()
             chestAppear(char: attacker1)                     //Fait apparaitre le coffre ou pas
@@ -183,12 +172,11 @@ class GameManager {
         } while player1.alive() == true && player2.alive() == true
     }
     
-    
     /// Will announce which team has won.
     func announceWinner() {
-        guard let player1 = team1, let player2 = team2 else {
-            return
-        }
+      guard let player1 = team1,
+            let player2 = team2
+            else { return }
         if player1.alive() == false {
             print("L'équipe \(player2.name) a gagné!")
         } else {
@@ -196,12 +184,12 @@ class GameManager {
         }
     }
     
-    
     /// For the bonus : Stats of the game.How much rounds , damage and health points.
     func gameStat() {
-        guard let player1 = team1, let player2 = team2 else {
-            return
-        }
+      guard let player1 = team1,
+            let player2 = team2
+            else { return }
+        
         print("La partie a durée \(countRound) rounds.")
         print("L'équipe \(player1.name) a généré \(player1.countDamage) HP de dommage et \(player1.countHealth) HP de soin.")
         print("L'équipe \(player2.name) a généré \(player2.countDamage) HP de dommage et \(player2.countHealth) HP de soin.")
