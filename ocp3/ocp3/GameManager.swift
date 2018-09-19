@@ -37,7 +37,7 @@ class GameManager {
             return getTeamName()
         }
     }
-        
+    
     /// Function used for asking and getting the character's type of each team's members
     ///
     /// - Returns: the character's type choosen by players
@@ -47,13 +47,14 @@ class GameManager {
             + "\n1. Combattant"
             + "\n2. Mage"
             + "\n3. Colosse"
-            + "\n4. Nain")
+            + "\n4. Nain"
+            + "\n5. Gorgone")
         if let choice = readLine(),
             let rawValue = Int(choice),
             let characterType = CharacterType.init(rawValue: rawValue) {
             return characterType
         } else {
-            print("Veuillez choisir entre 1 et 4 ")
+            print("Veuillez choisir entre 1 et 5 ")
             return getCharacterType()
         }
     }
@@ -108,8 +109,8 @@ class GameManager {
         team2 = makeTeam()
         team2?.teamInfo()
     }
-    ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
     
+    ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
     
     /// Function called to attack a choosen character of the opposite team.Used in func play()
     ///
@@ -149,24 +150,27 @@ class GameManager {
     }
     
     /// This function will loop till there's a winner.
-    
     func play() {
-      guard var player1 = team1,
+        guard var player1 = team1,
             var player2 = team2
             else { return }
         
         repeat {
             let attacker1 = player1.chooseAttacker()
-            chestAppear(char: attacker1)                     //Fait apparaitre le coffre ou pas
+            chestAppear(char: attacker1)                     //Make the chest appear or not
             if attacker1.type == .Mage {
-                let hurtMate = player1.chooseWhoToHeal()   //Fonction qui permet de choisir quel équipier le mage
-                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)//  va soigner (y compris lui-même)
+                let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
+                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
                 player1.countHealth = countHealthTeam
-            } else {                                                           // et incremente la func gameStat
+            } else if attacker1.type == .Gorgone {
                 let targetTeam2 = player2.chooseTarget()
-                countDamageTeam += attack(attacker: attacker1, target: targetTeam2) //Pour la func gameStat
+                targetTeam2.petrify()
+            } else {
+                let targetTeam2 = player2.chooseTarget()
+                countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
                 player1.countDamage = countDamageTeam
             }
+            player1.resetStatus()                            //To unfroze the possible frozen character
             swap(&player1, &player2)
             countRound += 1
         } while player1.alive() == true && player2.alive() == true
@@ -174,7 +178,7 @@ class GameManager {
     
     /// Will announce which team has won.
     func announceWinner() {
-      guard let player1 = team1,
+        guard let player1 = team1,
             let player2 = team2
             else { return }
         if player1.alive() == false {
@@ -186,7 +190,7 @@ class GameManager {
     
     /// For the bonus : Stats of the game.How much rounds , damage and health points.
     func gameStat() {
-      guard let player1 = team1,
+        guard let player1 = team1,
             let player2 = team2
             else { return }
         

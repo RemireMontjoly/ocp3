@@ -38,8 +38,11 @@ class Team {
                 print("Veuillez choisir entre 1 et 3.")
                 return chooseAttacker()
             }
-            if self.characters[choice - 1].life == 0 { ///////// choice -1  car le tableau de character demarre à 0
+            if self.characters[choice - 1].life == 0 { ///////// choice -1 because array of characters start at 0
                 print("Ce personnage est mort.Veuillez en choisir un autre.")
+                return chooseAttacker()
+            } else if self.characters[choice - 1].isPetrified {
+                print("Ce personnage est pétrifié pour un tour.Veuillez en choisir un autre.")
                 return chooseAttacker()
             } else {
                 return characters[choice - 1]
@@ -101,11 +104,20 @@ class Team {
         })
     }
     
+    /// To unfroze the frozen character 
+    func resetStatus() {
+        for character in characters {
+            character.isPetrified = false
+        }
+    }
+    
     /// Will display informations on each team before each round.
     private func miniInfo() {
         for(index, character) in characters.enumerated() {
             if character.life == 0 {
                 print("-\(index + 1) \(character.name) a 0 HP restant.Il est 💀")
+            } else if character.isPetrified {
+                print("-\(index + 1) \(character.name) est petrifié pour 1 tour. ❄️")
             } else {
                 print("-\(index + 1) \(character.name) avec \(character.life) HP restant.")
             }
@@ -115,5 +127,3 @@ class Team {
     
     
 }
-
-

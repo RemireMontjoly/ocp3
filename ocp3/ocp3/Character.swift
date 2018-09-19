@@ -19,7 +19,7 @@ enum CharacterType: Int {
     case Mage = 2
     case Colosse = 3
     case Nain = 4
-    
+    case Gorgone = 5
 }
 /// This class will allows to create the team's characters
 class Character {
@@ -27,6 +27,8 @@ class Character {
     var name: String
     var life: Int
     var weapon: Weapon
+    var isPetrified = false
+    
     init(type: CharacterType, name: String) {
         self.type = type
         self.name = name
@@ -43,6 +45,9 @@ class Character {
         case.Nain:
             self.life = 1
             self.weapon = Weapon(name: "Axe", damage: 50, heal: 0)
+        case.Gorgone:
+            self.life = 1
+            self.weapon = Weapon(name: "Petrificator", damage: 0, heal: 0)
         }
     }
     
@@ -63,6 +68,12 @@ class Character {
         self.life += healer.weapon.heal
     }
     
+    /// This func will allows the Gorgone to freeze a character for one round
+    func petrify () {
+        self.isPetrified = true
+    }
+    
+    /// Weapons in the random chest
     func equipeNewWeapon() {
         switch self.type {
         case.Combattant:
@@ -73,6 +84,9 @@ class Character {
             self.weapon = Weapon(name: "Hammer upgraded", damage: 50, heal: 0)
         case.Nain:
             self.weapon = Weapon(name: "Axe upgraded", damage: 50, heal: 0)
+        case.Gorgone:
+            self.weapon = Weapon(name: "Black Arrow", damage: 50, heal: 0)
+            
         }
     }
     
