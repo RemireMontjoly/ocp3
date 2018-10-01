@@ -28,6 +28,33 @@ class GameManager {
         team2?.teamInfo()
     }
     
+    /// This function will loop till there's a winner.
+    func play() {
+        guard var player1 = team1,
+            var player2 = team2
+            else { return }
+        
+        repeat {
+            let attacker1 = player1.chooseAttacker()
+            chestAppear(char: attacker1)                     //Make the chest appear or not
+            if attacker1.type == .Mage {
+                let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
+                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
+                player1.countHealth = countHealthTeam
+            } else if attacker1.type == .Gorgone {
+                let targetTeam2 = player2.chooseTarget()
+                targetTeam2.petrify()
+            } else {
+                let targetTeam2 = player2.chooseTarget()
+                countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
+                player1.countDamage = countDamageTeam
+            }
+            player1.resetStatus()                            //To unfroze the possible frozen character
+            swap(&player1, &player2)
+            countRound += 1
+        } while player1.alive() == true && player2.alive() == true
+    }
+    
     /// Function for the Mage.In order to heal teammate.
     ///
     /// - Parameters:
@@ -145,8 +172,6 @@ class GameManager {
         return team
     }
     
-    
-    
     ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
     
     /// Function called to attack a choosen character of the opposite team.Used in func play()
@@ -160,8 +185,7 @@ class GameManager {
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
         return attacker.weapon.damage
     }
-    
-    
+        
     /// Function for the random chest
     ///
     /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
@@ -175,32 +199,7 @@ class GameManager {
         }
     }
     
-    /// This function will loop till there's a winner.
-    func play() {
-        guard var player1 = team1,
-            var player2 = team2
-            else { return }
-        
-        repeat {
-            let attacker1 = player1.chooseAttacker()
-            chestAppear(char: attacker1)                     //Make the chest appear or not
-            if attacker1.type == .Mage {
-                let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
-                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
-                player1.countHealth = countHealthTeam
-            } else if attacker1.type == .Gorgone {
-                let targetTeam2 = player2.chooseTarget()
-                targetTeam2.petrify()
-            } else {
-                let targetTeam2 = player2.chooseTarget()
-                countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
-                player1.countDamage = countDamageTeam
-            }
-            player1.resetStatus()                            //To unfroze the possible frozen character
-            swap(&player1, &player2)
-            countRound += 1
-        } while player1.alive() == true && player2.alive() == true
-    }
+    
     
     
 }
