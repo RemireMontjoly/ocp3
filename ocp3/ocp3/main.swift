@@ -4,7 +4,7 @@
 //
 import Foundation
 
-/////////////////////////// Test de bon fonctionnement
+
 
 
 
@@ -15,5 +15,7 @@ gameManager.gameInit()
 gameManager.play()
 
 gameManager.announceWinner()
+
+gameManager.gameStat()
 
 

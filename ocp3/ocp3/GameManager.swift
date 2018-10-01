@@ -8,16 +8,65 @@
 import Foundation
 
 
+/// Class will manage the game with dedicated functions
 class GameManager {
     
-    ////////////////////////////////////////////////////// Les variables utiles au programme
-    var teamNames = [String]()
-    var characterNames = [String]()
+    /////Globals variables of the class
+    var teamNames = [String]()            //Array which will allows to check if the choosen team name is unique
+    var characterNames = [String]()       //Array which will allows to check if the choosen character name is unique
     var team1: Team?
     var team2: Team?
+    var countRound = 0                    //For the stats at the end of the game
+    var countDamageTeam = 0               //For the stats at the end of the game
+    var countHealthTeam = 0               //For the stats at the end of the game
     
-    ////////////////////////////////////////////////////////////////// Fonction pour obtenir le nom de l'équipe
-    func getTeamName() -> String {
+    /// Function which will create team1 and team2 and display teams' informations.
+    func gameInit() {
+        team1 = makeTeam()
+        team1?.teamInfo()
+        team2 = makeTeam()
+        team2?.teamInfo()
+    }
+    
+    /// Function for the Mage.In order to heal teammate.
+    ///
+    /// - Parameters:
+    ///   - healer: Will be the Mage
+    ///   - teamMate: Character of the team choosen by player in order to be healed.
+    /// - Returns: Health points of the Mage
+    func heal (healer: Character, teamMate: Character) -> Int {
+        teamMate.health(from: healer)
+        print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
+        return healer.weapon.heal
+    }
+    
+    /// Will announce which team has won.
+    func announceWinner() {
+        guard let player1 = team1,
+            let player2 = team2
+            else { return }
+        if player1.alive() == false {
+            print("L'équipe \(player2.name) a gagné!")
+        } else {
+            print("L'équipe \(player1.name) a gagné!")
+        }
+    }
+    
+    /// For the bonus : Stats of the game.How much rounds , damage and health points.
+    func gameStat() {
+        guard let player1 = team1,
+            let player2 = team2
+            else { return }
+        
+        print("La partie a durée \(countRound) rounds.")
+        print("L'équipe \(player1.name) a généré \(player1.countDamage) HP de dommage et \(player1.countHealth) HP de soin.")
+        print("L'équipe \(player2.name) a généré \(player2.countDamage) HP de dommage et \(player2.countHealth) HP de soin.")
+    }
+    
+    /// Function used for asking and getting the name of the team.
+    ///
+    /// - Returns: return name choosen by players
+    private func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
         if let name = readLine() {
             if teamNames.contains(name) {
@@ -32,26 +81,31 @@ class GameManager {
         }
     }
     
-    /////////////////////////////////////////////////////////////// Fonction pour choisir le type des personnages
-    func getCharacterType() -> CharacterType {
+    /// Function used for asking and getting the character's type of each team's members
+    ///
+    /// - Returns: the character's type choosen by players
+    private func getCharacterType() -> CharacterType {
         
         print ("Choisissez la classe de votre personnage: "
             + "\n1. Combattant"
             + "\n2. Mage"
             + "\n3. Colosse"
-            + "\n4. Nain")
+            + "\n4. Nain"
+            + "\n5. Gorgone")
         if let choice = readLine(),
             let rawValue = Int(choice),
             let characterType = CharacterType.init(rawValue: rawValue) {
             return characterType
         } else {
-            print("Veuillez choisir entre 1 et 4 ")
+            print("Veuillez choisir entre 1 et 5 ")
             return getCharacterType()
         }
     }
     
-    //////////////////////////////////////////////////////////////// Fonction pour choisir les noms des personnages
-    func getCharacterName() -> String {
+    /// Function used to choose the character's name of each team's members
+    ///
+    /// - Returns: Character's name choosen by players
+    private func getCharacterName() -> String {
         print("Choisissez son nom: ")
         if let name = readLine(){
             if characterNames.contains(name) {
@@ -66,8 +120,10 @@ class GameManager {
         }
     }
     
-    ///////////////////////////////////////////////////////////////// Fonction pour créer un personnage(type + nom)
-    func makeCharacter() -> Character {
+    /// Function used to create a complete character (Type + Name)
+    ///
+    /// - Returns: An instance of Class Character for each characters built with previous functions.
+    private func makeCharacter() -> Character {
         
         let characterType = getCharacterType()
         let characterName = getCharacterName()
@@ -75,8 +131,10 @@ class GameManager {
         return character
     }
     
-    ///////////////////////////////////////////////////////// Fonction pour créer les équipes
-    func makeTeam () -> Team {
+    /// Function used to create a complete team (3 characters)
+    ///
+    /// - Returns: An instance of Class Team
+    private func makeTeam () -> Team {
         let teamName = getTeamName()
         var characterTeam = [Character]()
         for _ in 1...3 {
@@ -87,61 +145,62 @@ class GameManager {
         return team
     }
     
-    /////////////////////////////////////////////////////////////// Fonction pour initialiser le jeux
-    func gameInit() {
-        team1 = makeTeam()
-        team1?.teamInfo()
-        team2 = makeTeam()
-        team2?.teamInfo()
-    }
-    ///////////////////////////////////Fonctions pour gerer les combats /////////////////////////////////////////
-    func attack(attacker: Character, target: Character) {
+    
+    
+    ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
+    
+    /// Function called to attack a choosen character of the opposite team.Used in func play()
+    ///
+    /// - Parameters:
+    ///   - attacker: Player will choose one of the three characters of his team.This func is in Class Team
+    ///   - target: Player will choose one of the three characters of the opposite team to attack.This func is in Class Team
+    /// - Returns: Damage points of the attacker.
+    private  func attack(attacker: Character, target: Character) -> Int {
         target.damage(from: attacker)
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
+        return attacker.weapon.damage
     }
     
-    //////////////////////////////////Fonction pour soigner un membre de son équipe
-    func heal (healer: Character, teamMate: Character) {
-        teamMate.health(from: healer)
-        print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
-    }
     
-    ///////////////////////////////////Fonction qui permet de faire une boucle jusqu'à ce qu'il y ait un vainqueur
-    func play() {
-        repeat {
-            var player1 = team1!
-            var player2 = team2!
-            let attacker1 = player1.chooseAttacker()
-            if attacker1.type == .Mage {
-                let hurtMate = player1.chooseWhoToHeal()   /////Fonction qui permet de choisir quel équipier le  mage veut soigner(y compris lui-même)
-                heal(healer: attacker1, teamMate: hurtMate)     
-            } else {
-                let targetTeam2 = player2.chooseTarget()
-                attack(attacker: attacker1, target: targetTeam2)
-            }
-            let attacker2 = player2.chooseAttacker()
-            if attacker2.type == .Mage {
-                let hurtMate = player2.chooseWhoToHeal()
-                heal(healer: attacker2, teamMate: hurtMate)
-            } else { let targetTeam1 = player1.chooseTarget()
-                attack(attacker: attacker2, target: targetTeam1)
-            }
-            swap(&player1, &player2)
-            
-        } while team1!.alive() == true && team2!.alive() == true
-    }
-    
-    func announceWinner() {
-        if team1!.alive() == false {
-            print("L'équipe \(team2!.name) a gagné! ")
+    /// Function for the random chest
+    ///
+    /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
+    private func chestAppear(char: Character) {
+        let hazard = Int(arc4random_uniform(2))
+        if hazard == 0 {
+            print("")
         } else {
-            print("L'équipe \(team1!.name) a gagné! ")
+            char.equipeNewWeapon()
+            print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
         }
     }
     
+    /// This function will loop till there's a winner.
+    func play() {
+        guard var player1 = team1,
+            var player2 = team2
+            else { return }
+        
+        repeat {
+            let attacker1 = player1.chooseAttacker()
+            chestAppear(char: attacker1)                     //Make the chest appear or not
+            if attacker1.type == .Mage {
+                let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
+                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
+                player1.countHealth = countHealthTeam
+            } else if attacker1.type == .Gorgone {
+                let targetTeam2 = player2.chooseTarget()
+                targetTeam2.petrify()
+            } else {
+                let targetTeam2 = player2.chooseTarget()
+                countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
+                player1.countDamage = countDamageTeam
+            }
+            player1.resetStatus()                            //To unfroze the possible frozen character
+            swap(&player1, &player2)
+            countRound += 1
+        } while player1.alive() == true && player2.alive() == true
+    }
+    
+    
 }
-
-
-
-
-
