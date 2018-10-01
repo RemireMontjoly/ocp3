@@ -20,10 +20,53 @@ class GameManager {
     var countDamageTeam = 0               //For the stats at the end of the game
     var countHealthTeam = 0               //For the stats at the end of the game
     
+    /// Function which will create team1 and team2 and display teams' informations.
+    func gameInit() {
+        team1 = makeTeam()
+        team1?.teamInfo()
+        team2 = makeTeam()
+        team2?.teamInfo()
+    }
+    
+    /// Function for the Mage.In order to heal teammate.
+    ///
+    /// - Parameters:
+    ///   - healer: Will be the Mage
+    ///   - teamMate: Character of the team choosen by player in order to be healed.
+    /// - Returns: Health points of the Mage
+    func heal (healer: Character, teamMate: Character) -> Int {
+        teamMate.health(from: healer)
+        print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
+        return healer.weapon.heal
+    }
+    
+    /// Will announce which team has won.
+    func announceWinner() {
+        guard let player1 = team1,
+            let player2 = team2
+            else { return }
+        if player1.alive() == false {
+            print("L'équipe \(player2.name) a gagné!")
+        } else {
+            print("L'équipe \(player1.name) a gagné!")
+        }
+    }
+    
+    /// For the bonus : Stats of the game.How much rounds , damage and health points.
+    func gameStat() {
+        guard let player1 = team1,
+            let player2 = team2
+            else { return }
+        
+        print("La partie a durée \(countRound) rounds.")
+        print("L'équipe \(player1.name) a généré \(player1.countDamage) HP de dommage et \(player1.countHealth) HP de soin.")
+        print("L'équipe \(player2.name) a généré \(player2.countDamage) HP de dommage et \(player2.countHealth) HP de soin.")
+    }
+    
     /// Function used for asking and getting the name of the team.
     ///
     /// - Returns: return name choosen by players
-    func getTeamName() -> String {
+    private func getTeamName() -> String {
         print("Veuillez choisir le nom de votre équipe")
         if let name = readLine() {
             if teamNames.contains(name) {
@@ -41,7 +84,7 @@ class GameManager {
     /// Function used for asking and getting the character's type of each team's members
     ///
     /// - Returns: the character's type choosen by players
-    func getCharacterType() -> CharacterType {
+    private func getCharacterType() -> CharacterType {
         
         print ("Choisissez la classe de votre personnage: "
             + "\n1. Combattant"
@@ -62,7 +105,7 @@ class GameManager {
     /// Function used to choose the character's name of each team's members
     ///
     /// - Returns: Character's name choosen by players
-    func getCharacterName() -> String {
+    private func getCharacterName() -> String {
         print("Choisissez son nom: ")
         if let name = readLine(){
             if characterNames.contains(name) {
@@ -80,7 +123,7 @@ class GameManager {
     /// Function used to create a complete character (Type + Name)
     ///
     /// - Returns: An instance of Class Character for each characters built with previous functions.
-    func makeCharacter() -> Character {
+    private func makeCharacter() -> Character {
         
         let characterType = getCharacterType()
         let characterName = getCharacterName()
@@ -91,7 +134,7 @@ class GameManager {
     /// Function used to create a complete team (3 characters)
     ///
     /// - Returns: An instance of Class Team
-    func makeTeam () -> Team {
+    private func makeTeam () -> Team {
         let teamName = getTeamName()
         var characterTeam = [Character]()
         for _ in 1...3 {
@@ -102,13 +145,7 @@ class GameManager {
         return team
     }
     
-    /// Function which will create team1 and team2 and display teams' informations.
-    func gameInit() {
-        team1 = makeTeam()
-        team1?.teamInfo()
-        team2 = makeTeam()
-        team2?.teamInfo()
-    }
+    
     
     ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
     
@@ -118,28 +155,17 @@ class GameManager {
     ///   - attacker: Player will choose one of the three characters of his team.This func is in Class Team
     ///   - target: Player will choose one of the three characters of the opposite team to attack.This func is in Class Team
     /// - Returns: Damage points of the attacker.
-    func attack(attacker: Character, target: Character) -> Int {
+    private  func attack(attacker: Character, target: Character) -> Int {
         target.damage(from: attacker)
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
         return attacker.weapon.damage
     }
     
-    /// Function for the Mage.In order to heal teammate.
-    ///
-    /// - Parameters:
-    ///   - healer: Will be the Mage
-    ///   - teamMate: Character of the team choosen by player in order to be healed.
-    /// - Returns: Health points of the Mage
-    func heal (healer: Character, teamMate: Character) -> Int {
-        teamMate.health(from: healer)
-        print("\(healer.name) a soigné \(teamMate.name) , qui a désormais \(teamMate.life) hp.")
-        return healer.weapon.heal
-    }
     
     /// Function for the random chest
     ///
     /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
-    func chestAppear(char: Character) {
+    private func chestAppear(char: Character) {
         let hazard = Int(arc4random_uniform(2))
         if hazard == 0 {
             print("")
@@ -175,30 +201,6 @@ class GameManager {
             countRound += 1
         } while player1.alive() == true && player2.alive() == true
     }
-    
-    /// Will announce which team has won.
-    func announceWinner() {
-        guard let player1 = team1,
-            let player2 = team2
-            else { return }
-        if player1.alive() == false {
-            print("L'équipe \(player2.name) a gagné!")
-        } else {
-            print("L'équipe \(player1.name) a gagné!")
-        }
-    }
-    
-    /// For the bonus : Stats of the game.How much rounds , damage and health points.
-    func gameStat() {
-        guard let player1 = team1,
-            let player2 = team2
-            else { return }
-        
-        print("La partie a durée \(countRound) rounds.")
-        print("L'équipe \(player1.name) a généré \(player1.countDamage) HP de dommage et \(player1.countHealth) HP de soin.")
-        print("L'équipe \(player2.name) a généré \(player2.countDamage) HP de dommage et \(player2.countHealth) HP de soin.")
-    }
-    
     
     
 }

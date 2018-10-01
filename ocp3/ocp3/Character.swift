@@ -33,19 +33,19 @@ class Character {
         self.type = type
         self.name = name
         switch self.type {
-        case.Combattant:
+        case .Combattant:
             self.life = 1
             self.weapon = Weapon(name: "Sword", damage: 50, heal: 0)
-        case.Mage:
+        case .Mage:
             self.life = 1
             self.weapon = Weapon(name: "Magic Wand", damage: 0, heal: 2)
-        case.Colosse:
+        case .Colosse:
             self.life = 1
             self.weapon = Weapon(name: "Hammer", damage: 50, heal: 0)
-        case.Nain:
+        case .Nain:
             self.life = 1
             self.weapon = Weapon(name: "Axe", damage: 50, heal: 0)
-        case.Gorgone:
+        case .Gorgone:
             self.life = 1
             self.weapon = Weapon(name: "Petrificator", damage: 0, heal: 0)
         }
@@ -76,15 +76,15 @@ class Character {
     /// Weapons in the random chest
     func equipeNewWeapon() {
         switch self.type {
-        case.Combattant:
+        case .Combattant:
             self.weapon = Weapon(name: "Sword upgraded", damage: 50, heal: 0)
-        case.Mage:
+        case .Mage:
             self.weapon = Weapon(name: "Magic Wand upgraded", damage: 0, heal: 2)
-        case.Colosse:
+        case .Colosse:
             self.weapon = Weapon(name: "Hammer upgraded", damage: 50, heal: 0)
-        case.Nain:
+        case .Nain:
             self.weapon = Weapon(name: "Axe upgraded", damage: 50, heal: 0)
-        case.Gorgone:
+        case .Gorgone:
             self.weapon = Weapon(name: "Black Arrow", damage: 50, heal: 0)
             
         }
