@@ -36,15 +36,18 @@ class GameManager {
         
         repeat {
             let attacker1 = player1.chooseAttacker()
-            chestAppear(char: attacker1)                     //Make the chest appear or not
+            if attacker1.newWeapon == false {           //Make the chest appear only if the character
+                chestAppear(char: attacker1)            // hasn't already get his random chest.
+            }
             if attacker1.type == .Mage {
                 let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
                 countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
-                player1.countHealth = countHealthTeam
-            } else if attacker1.type == .Gorgone {
+                player1.countHealth = countHealthTeam      // For the stats
+            } else if attacker1.type == .Gorgone && attacker1.newWeapon == false { // New character for the bonus
                 let targetTeam2 = player2.chooseTarget()
                 targetTeam2.petrify()
-            } else {
+                print("\(attacker1.name) a attaqué \(targetTeam2.name) est l'a pétrifié pour 1 round.")
+            } else {                                                                                  
                 let targetTeam2 = player2.chooseTarget()
                 countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
                 player1.countDamage = countDamageTeam
@@ -185,19 +188,30 @@ class GameManager {
         print("\(attacker.name) a attaqué \(target.name).Il lui reste \(target.life) hp.")
         return attacker.weapon.damage
     }
-        
+    
     /// Function for the random chest
     ///
     /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
-    private func chestAppear(char: Character) {
+    
+    func chestAppear(char: Character) {
         let hazard = Int(arc4random_uniform(2))
-        if hazard == 0 {
-            print("")
-        } else {
+        if hazard == 1 {
             char.equipeNewWeapon()
             print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
+        } else {
+            return
         }
     }
+    
+    /*  private func chestAppear(char: Character) {
+     let hazard = Int(arc4random_uniform(2))
+     if hazard == 0 {
+     print("")
+     } else {
+     char.equipeNewWeapon()
+     print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
+     }
+     } */
     
     
     

@@ -28,13 +28,14 @@ class Character {
     var life: Int
     var weapon: Weapon
     var isPetrified = false
+    var newWeapon = false
     
     init(type: CharacterType, name: String) {
         self.type = type
         self.name = name
         switch self.type {
         case .Combattant:
-            self.life = 1
+            self.life = 1000
             self.weapon = Weapon(name: "Sword", damage: 50, heal: 0)
         case .Mage:
             self.life = 1
@@ -75,6 +76,7 @@ class Character {
     
     /// Weapons in the random chest
     func equipeNewWeapon() {
+        newWeapon = true
         switch self.type {
         case .Combattant:
             self.weapon = Weapon(name: "Sword upgraded", damage: 50, heal: 0)
