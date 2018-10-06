@@ -197,16 +197,7 @@ class GameManager {
         char.equipeNewWeapon()
         print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
     }
-    /*     private func chestAppear(char: Character) {
-     let hazard = Int(arc4random_uniform(2))
-     if hazard == 0 {
-     print("")
-     } else {
-     char.equipeNewWeapon()
-     print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
-     }
-     }*/
-    
+
     
     
     
