@@ -35,21 +35,21 @@ class GameManager {
             else { return }
         
         repeat {
-            let attacker1 = player1.chooseAttacker()
-            if attacker1.newWeapon == false {           //Make the chest appear only if the character
-                chestAppear(char: attacker1)            // hasn't already get his random chest.
+            let attacker = player1.chooseAttacker()
+            if attacker.newWeapon == false {           //Make the chest appear only if the character
+                chestAppear(char: attacker)            // hasn't already get his random chest.
             }
-            if attacker1.type == .Mage {
+            if attacker.type == .Mage {
                 let hurtMate = player1.chooseWhoToHeal()   //This func allows the Mage to choose a teammate to heal
-                countHealthTeam += heal(healer: attacker1, teamMate: hurtMate)// included himself.
+                countHealthTeam += heal(healer: attacker, teamMate: hurtMate)// included himself.
                 player1.countHealth = countHealthTeam      // For the stats
-            } else if attacker1.type == .Gorgone && attacker1.newWeapon == false { // New character for the bonus
-                let targetTeam2 = player2.chooseTarget()
-                targetTeam2.petrify()
-                print("\(attacker1.name) a attaqué \(targetTeam2.name) est l'a pétrifié pour 1 round.")
+            } else if attacker.type == .Gorgone && attacker.newWeapon == false { // New character for the bonus
+                let targetTeam = player2.chooseTarget()
+                targetTeam.petrify()
+                print("\(attacker.name) a attaqué \(targetTeam.name) est l'a pétrifié pour 1 round.")
             } else {                                                                                  
-                let targetTeam2 = player2.chooseTarget()
-                countDamageTeam += attack(attacker: attacker1, target: targetTeam2)
+                let targetTeam = player2.chooseTarget()
+                countDamageTeam += attack(attacker: attacker, target: targetTeam)
                 player1.countDamage = countDamageTeam
             }
             player1.resetStatus()                            //To unfroze the possible frozen character
@@ -82,7 +82,7 @@ class GameManager {
         }
     }
     
-    /// For the bonus : Stats of the game.How much rounds , damage and health points.
+    /// For the bonus : Stats of the game.How much rounds, damage and health points.
     func gameStat() {
         guard let player1 = team1,
             let player2 = team2
@@ -175,8 +175,6 @@ class GameManager {
         return team
     }
     
-    ///////////////////////////////////Funtions for managing the fight /////////////////////////////////////////
-    
     /// Function called to attack a choosen character of the opposite team.Used in func play()
     ///
     /// - Parameters:
@@ -193,17 +191,13 @@ class GameManager {
     ///
     /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
     
- /*   private func chestAppear(char: Character) {
+    private func chestAppear(char: Character) {
         let random = Int(arc4random_uniform(2))
-        if random == 1 {
-            char.equipeNewWeapon()
-            print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
-        } else {
-            return
-        }
-    }*/
-    
-      private func chestAppear(char: Character) {
+        guard random == 1 else { return }
+        char.equipeNewWeapon()
+        print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
+    }
+    /*     private func chestAppear(char: Character) {
      let hazard = Int(arc4random_uniform(2))
      if hazard == 0 {
      print("")
@@ -211,7 +205,7 @@ class GameManager {
      char.equipeNewWeapon()
      print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")
      }
-     }
+     }*/
     
     
     
