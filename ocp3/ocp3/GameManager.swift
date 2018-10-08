@@ -192,7 +192,7 @@ class GameManager {
     /// - Parameter char: If chest appear for the Mage, new weapon will provide health points instead of damage.
     
     private func chestAppear(char: Character) {
-        let random = Int(arc4random_uniform(2))
+        let random = Int(arc4random_uniform(10))
         guard random == 1 else { return }
         char.equipeNewWeapon()
         print("Un coffre vient d'apparaitre.\(char.name) l'ouvre est découvre une nouvelle arme nommée \(char.weapon.name) et s'en équipe.")

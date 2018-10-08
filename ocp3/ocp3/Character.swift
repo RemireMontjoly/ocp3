@@ -35,19 +35,19 @@ class Character {
         self.name = name
         switch self.type {
         case .Combattant:
-            self.life = 1000
-            self.weapon = Weapon(name: "Sword", damage: 50, heal: 0)
+            self.life = 100
+            self.weapon = Weapon(name: "Sword", damage: 10, heal: 0)
         case .Mage:
-            self.life = 1
-            self.weapon = Weapon(name: "Magic Wand", damage: 0, heal: 2)
+            self.life = 70
+            self.weapon = Weapon(name: "Magic Wand", damage: 0, heal: 10)
         case .Colosse:
-            self.life = 1
-            self.weapon = Weapon(name: "Hammer", damage: 50, heal: 0)
+            self.life = 120
+            self.weapon = Weapon(name: "Hammer", damage: 5, heal: 0)
         case .Nain:
-            self.life = 1
-            self.weapon = Weapon(name: "Axe", damage: 50, heal: 0)
+            self.life = 60
+            self.weapon = Weapon(name: "Axe", damage: 15, heal: 0)
         case .Gorgone:
-            self.life = 1
+            self.life = 70
             self.weapon = Weapon(name: "Petrificator", damage: 0, heal: 0)
         }
     }
@@ -79,15 +79,15 @@ class Character {
         newWeapon = true
         switch self.type {
         case .Combattant:
-            self.weapon = Weapon(name: "Sword upgraded", damage: 50, heal: 0)
+            self.weapon = Weapon(name: "Sword upgraded", damage: 15, heal: 0)
         case .Mage:
-            self.weapon = Weapon(name: "Magic Wand upgraded", damage: 0, heal: 2)
+            self.weapon = Weapon(name: "Magic Wand upgraded", damage: 0, heal: 15)
         case .Colosse:
-            self.weapon = Weapon(name: "Hammer upgraded", damage: 50, heal: 0)
+            self.weapon = Weapon(name: "Hammer upgraded", damage: 10, heal: 0)
         case .Nain:
-            self.weapon = Weapon(name: "Axe upgraded", damage: 50, heal: 0)
+            self.weapon = Weapon(name: "Axe upgraded", damage: 20, heal: 0)
         case .Gorgone:
-            self.weapon = Weapon(name: "Black Arrow", damage: 50, heal: 0)
+            self.weapon = Weapon(name: "Black Arrow", damage: 10, heal: 0)
             
         }
     }
